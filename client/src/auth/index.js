@@ -88,17 +88,18 @@ function AuthContextProvider(props) {
                     }
                 })
                 //log in now
-                auth.loginUser(email, password)
+                auth.loginUser(email, password);
             }
         } catch(error){
             authReducer({
                 type: AuthActionType.ERROR_AUTH,
                 payload:error.response.data.errorMsg
-            })
-    }
+            });
+        }   
     }
 
     auth.loginUser = async function(email, password) {
+        try{
         const response = await api.loginUser(email, password);
         if (response.status === 200) {
             authReducer({
@@ -109,8 +110,13 @@ function AuthContextProvider(props) {
             })
             history.push("/");
         }
+        } catch(error){
+            authReducer({
+                type: AuthActionType.ERROR_AUTH,
+                payload:error.response.data.errorMsg
+            });
     }
-
+    }
     auth.logoutUser = async function() {
         const response = await api.logoutUser();
         if (response.status === 200) {
