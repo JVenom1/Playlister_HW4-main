@@ -12,6 +12,9 @@ import Link from '@mui/material/Link';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
+import AlertTitle from '@mui/material/AlertTitle';
 
 
 const style = {
@@ -39,17 +42,20 @@ export default function RegisterScreen() {
             formData.get('password'),
             formData.get('passwordVerify')
 
-        );
-        auth.loginUser(
-            formData.get('email'),
-            formData.get('password')
-        )
-        auth.getLoggedIn()
-        
+        );        
     };
-
+    const handleClose=()=>{
+        auth.shutNotiModal();
+    }
     return (
-            <Container component="main" maxWidth="xs">
+            <Container component="main" maxWidth="xl">
+            {auth.errorMessage != null && <Stack sx={{ width: '100%' }}>
+                <Alert severity="error" onClose={handleClose}>
+                    <AlertTitle>Error</AlertTitle>
+                    Yoo got an error ALERT ALERT <strong>{auth.errorMessage}</strong>
+                </Alert>
+            </Stack>
+            }
                 <CssBaseline />
                 <Box
                     sx={{

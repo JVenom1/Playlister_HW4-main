@@ -126,7 +126,7 @@ export default function LoginScreen() {
                         <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="body2">
-                                    Forgot password? Well come on down here and click me.
+                                    Forgot password?<br></br>Well come on down here! 
                                 </Link>
                             </Grid>
                             <Grid item>
