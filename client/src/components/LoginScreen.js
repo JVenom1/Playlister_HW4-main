@@ -17,8 +17,11 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import * as React from 'react';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
+import AlertTitle from '@mui/material/AlertTitle';
 
-const style = {
+const style = { // from other MUI Modals
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -29,11 +32,11 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
+
+
 export default function LoginScreen() {
     const { auth } = useContext(AuthContext);
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -42,32 +45,21 @@ export default function LoginScreen() {
             formData.get('email'),
             formData.get('password')
         );
-        if(auth.err){
-            handleOpen();
-        }
     };
+    const handleClose = () => {
+        auth.shutNotiModal();
+    }
 
     return (
         <Grid container component="main" sx={{ height: '100vh' }}>
+            {auth.errorMessage != null && <Stack sx={{ width: '100%' }}>
+                <Alert severity="error" onClose={handleClose }>
+                    <AlertTitle>Error</AlertTitle>
+                    This is an error alert — <strong>{auth.errorMessage}</strong>
+                </Alert>
+            </Stack>
+            }
             <CssBaseline />
-
-            <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box>
-                        <Typography id="modal-modal-title" variant="h6" component="h2">
-                            Account Error
-                        </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            {auth.errMsg}
-                        </Typography>
-                        <Button onClick={handleClose}>Close</Button>
-                    </Box>
-                </Modal>
-
             <Grid
                 item
                 xs={false}
@@ -129,12 +121,12 @@ export default function LoginScreen() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Sign In
+                            Sign In Pweaz
                         </Button>
                         <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="body2">
-                                    Forgot password?
+                                    Forgot password? Well come on down here and click me.
                                 </Link>
                             </Grid>
                             <Grid item>
