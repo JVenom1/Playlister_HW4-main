@@ -117,6 +117,8 @@ function AuthContextProvider(props) {
             });
     }
     }
+
+
     auth.logoutUser = async function() {
         const response = await api.logoutUser();
         if (response.status === 200) {
@@ -136,6 +138,12 @@ function AuthContextProvider(props) {
         }
         console.log("user initials: " + initials);
         return initials;
+    }
+    auth.shutNotiModal = function () {
+        authReducer({
+            type: AuthActionType.ERROR_AUTH,
+            payload: null
+        })
     }
 
     return (
