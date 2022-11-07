@@ -15,9 +15,15 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import * as React from 'react';
+
 
 export default function LoginScreen() {
     const { auth } = useContext(AuthContext);
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -26,11 +32,32 @@ export default function LoginScreen() {
             formData.get('email'),
             formData.get('password')
         );
+        if(auth.err){
+            handleOpen();
+        }
     };
 
     return (
         <Grid container component="main" sx={{ height: '100vh' }}>
             <CssBaseline />
+
+            <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box>
+                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                            Account Error
+                        </Typography>
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                            {auth.errMsg}
+                        </Typography>
+                        <Button onClick={handleClose}>Close</Button>
+                    </Box>
+                </Modal>
+                
             <Grid
                 item
                 xs={false}
